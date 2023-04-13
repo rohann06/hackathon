@@ -27,7 +27,7 @@ const AptosWalletConnect = () => {
   }, [isAptosDefined]);
 
   return (
-    <div className=" flex  gap-5">
+    <div className=" flex justify-end  gap-5 mx-6">
       <button
         onClick={() => router.push("/create")}
         className=" bg-blue-600 text-white rounded-xl font-semibold text-[14px] lg:text-[16px] px-8 lg:px-10 py-2"
