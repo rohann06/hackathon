@@ -30,13 +30,13 @@ export default function App({ Component, pageProps }) {
 
   return (
     <AptosWalletAdapterProvider plugins={wallets} autoConnect={true}>
-      <Layout>
-        <AptosContext.Provider value={aptosClient}>
-          <LivepeerConfig client={livepeerClient}>
+      <AptosContext.Provider value={aptosClient}>
+        <LivepeerConfig client={livepeerClient}>
+          <Layout>
             <Component {...pageProps} />{" "}
-          </LivepeerConfig>{" "}
-        </AptosContext.Provider>{" "}
-      </Layout>{" "}
+          </Layout>
+        </LivepeerConfig>{" "}
+      </AptosContext.Provider>{" "}
     </AptosWalletAdapterProvider>
   );
 }

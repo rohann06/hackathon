@@ -73,12 +73,7 @@ const handler = async (req, res) => {
       );
       await client.waitForTransaction(createTokenHash, { checkSuccess: true });
 
-      // offer the token to the address in the request body
-      // this must be confirmed by the recipient, so this is safe
-      // (a random address could be passed in to the POST body)
-      //
-      // a better way would be to have the recipient sign a payload
-      // and confirm that signature in the backend
+      
       const offerTokenHash = await tokenClient.offerToken(
         issuer,
         receiver,

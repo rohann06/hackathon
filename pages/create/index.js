@@ -1,18 +1,27 @@
-import { useUpdateAsset, useAsset, useCreateAsset } from "@livepeer/react";
+import {
+  Player,
+  useUpdateAsset,
+  useAsset,
+  useCreateAsset,
+} from "@livepeer/react";
 import { useCallback, useEffect, useMemo, useState, useContext } from "react";
 import { useDropzone } from "react-dropzone";
 import { Types } from "aptos";
 import { AddressContext } from "@/context/AddressProvider";
 import { AptosContext } from "../_app";
+import { parseArweaveTxId, parseCid } from "livepeer/media";
 
 const Create = () => {
   const [video, setVideo] = useState();
   const [title, setTile] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
+  const [url, setUrl] = useState("");
 
   const { address } = useContext(AddressContext);
   const { aptosClient } = useContext(AptosContext);
+
+  // const idParsed = useMemo(() => parseCid(url) ?? parseArweaveTxId(url), [url]);
 
   //Create asset
   const {
@@ -24,14 +33,16 @@ const Create = () => {
   } = useCreateAsset(
     video
       ? {
-          sources: [{ name: video.name, file: video }],
+          sources: [{ name: video.name, file: video, storage:{
+            ipfs: true
+          } }],
         }
       : null
   );
 
   //uploading on IPFS
   const assetId = asset?.[0].id;
-  const { mutate: updateAsset, status: updateStatus } = useUpdateAsset({
+  const { mutate: updateAsset, status: updateStatus, data: updatedData } = useUpdateAsset({
     assetId,
     storage: {
       ipfs: true,
@@ -43,6 +54,10 @@ const Create = () => {
     },
   });
 
+  useEffect(() => {
+    console.log('updatedData', updatedData)
+  },[updatedData])
+  
   const onDrop = useCallback(async (acceptedFiles) => {
     if (acceptedFiles && acceptedFiles.length > 0 && acceptedFiles?.[0]) {
       setVideo(acceptedFiles[0]);
@@ -82,23 +97,18 @@ const Create = () => {
   const [isCreatingNft, setIsCreatingNft] = useState(false);
 
   const [creationHash, setCreationHash] = useState("");
+  console.log("aptosClient", aptosClient)
 
   const mintNft = useCallback(async () => {
     setIsCreatingNft(true);
 
     try {
-      console.log(
-        "creatoionAddress; %s and aptosClient; %s and asset %s",
-        address,
-        aptosClient,
-        asset?.storage?.ipfs?.nftMetadata?.url
-      );
       if (address && aptosClient && asset?.storage?.ipfs?.nftMetadata?.url) {
         const body = {
           receiver: address,
           metadataUri: asset.storage.ipfs.nftMetadata.url,
         };
-        // console.log("function runing")
+        console.log("Running")
         const response = await fetch("/api/create-aptos-token", {
           method: "POST",
           headers: {
@@ -149,9 +159,11 @@ const Create = () => {
     setIsCreatingNft,
   ]);
 
+  //Showing the videopreview
+
   useEffect(() => {
-    console.log("isCreatingNft :", isCreatingNft);
-  }, [isCreatingNft]);
+    console.log("asset :", asset);
+  }, [asset]);
   useEffect(() => {
     console.log("creationHash: ", creationHash);
   }, [creationHash]);
@@ -161,6 +173,10 @@ const Create = () => {
   useEffect(() => {
     console.log("NftAsset", NftAsset);
   }, [NftAsset]);
+
+  useEffect(() => {
+    console.log("assetId", assetId);
+  }, [assetId]);
 
   return (
     <div className="  w-full px-10 -mt-4">
@@ -208,33 +224,42 @@ const Create = () => {
             className=" w-full border-2 border-slate-400 dark:border-slate-600 dark:text-white bg-transparent rounded-xl px-4 py-3 my-3 "
           />
         </div>
-        <div className=" flex flex-col items-center justify-center  rounded-xl dark:bg-gray-800 lg:w-[50%] h-60">
-          <div className=" text-white text-center">
-            <div className=" w-full" {...getRootProps()}>
-              <input {...getInputProps()} />
-              <p className=" text-3xl font-extrabold text-gray-600 my-3">
-                Drag and drop or browse files
-              </p>
+        <div className=" flex justify-start items-center gap-10">
+          <div className=" flex flex-col items-center justify-center  rounded-xl dark:bg-gray-800 w-[50%]  h-60">
+            <div className=" text-white text-center">
+              <div className=" w-full" {...getRootProps()}>
+                <input {...getInputProps()} />
+                <p className=" text-3xl font-extrabold text-gray-600 my-3">
+                  Drag and drop or browse files
+                </p>
+              </div>
+              {video ? (
+                <p>{video.name}</p>
+              ) : (
+                <p>Select a video file to upload.</p>
+              )}
+              {progressFormatted && <p>{progressFormatted}</p>}
             </div>
-            {video ? (
-              <p>{video.name}</p>
-            ) : (
-              <p>Select a video file to upload.</p>
-            )}
-            {progressFormatted && <p>{progressFormatted}</p>}
+          </div>
+
+          <div className=" h-60 bg-black text-white w-[30%] rounded-xl">
+            {/* {idParsed && (
+              <Player
+                title={idParsed.id}
+                src={url}
+                autoPlay
+                muted
+                autoUrlUpload={{
+                  fallback: true,
+                  ipfsGateway: "https://w3s.link",
+                }}
+              />
+            )} */}
           </div>
         </div>
 
         {address && updateStatus === "success" ? (
           <div className=" mt-14 flex justify-center items-center">
-            {creationHash && (
-              <a
-                className=" text-white"
-                href={`https://explorer.aptoslabs.com/txn/${creationHash}?network=Devnet`}
-              >
-                View Mint Transaction
-              </a>
-            )}
             <button
               onClick={() => mintNft?.()}
               className=" bg-blue-600 text-white rounded-xl font-semibold text-[14px] lg:text-[20px] px-8 lg:px-20 py-2 "
@@ -249,7 +274,7 @@ const Create = () => {
                 onClick={() => updateAsset?.()}
                 className=" bg-blue-600 text-white rounded-xl font-semibold text-[14px] lg:text-[20px] px-8 lg:px-20 py-2 "
               >
-                {updateStatus === "Loading" ? "Loading...." : "Upload to IPFS"}
+                {updateStatus === "loading" ? "Loading...." : "Upload to IPFS"}
               </button>
             ) : (
               <button
@@ -268,85 +293,3 @@ const Create = () => {
 };
 
 export default Create;
-
-// import { useCreateAsset } from "@livepeer/react";
-
-// import { useCallback, useEffect, useMemo, useState } from "react";
-// import { useDropzone } from "react-dropzone";
-
-// const Create = () => {
-//   const [video, setVideo] = useState();
-//   const {
-//     mutate: createAsset,
-//     data: asset,
-//     status,
-//     progress,
-//     error,
-//   } = useCreateAsset(
-//     video
-//       ? {
-//           sources: [{ name: video.name, file: video }],
-//         }
-//       : null
-//   );
-
-//   const onDrop = useCallback(async (acceptedFiles) => {
-//     if (acceptedFiles && acceptedFiles.length > 0 && acceptedFiles?.[0]) {
-//       setVideo(acceptedFiles[0]);
-//     }
-//   }, []);
-
-//   const { getRootProps, getInputProps } = useDropzone({
-//     accept: {
-//       "video/*": ["*.mp4"],
-//     },
-//     maxFiles: 1,
-//     onDrop,
-//   });
-
-//   const progressFormatted = useMemo(
-//     () =>
-//       progress?.[0].phase === "failed"
-//         ? "Failed to process video."
-//         : progress?.[0].phase === "waiting"
-//         ? "Waiting"
-//         : progress?.[0].phase === "uploading"
-//         ? `Uploading: ${Math.round(progress?.[0]?.progress * 100)}%`
-//         : progress?.[0].phase === "processing"
-//         ? `Processing: ${Math.round(progress?.[0].progress * 100)}%`
-//         : null,
-//     [progress]
-//   );
-
-//   useEffect(() => {
-//     console.log("status", status);
-//   }, [status]);
-//   useEffect(() => {
-//     console.log("asset :", asset);
-//   }, [asset, video]);
-
-//   useEffect(() => {
-//     console.log("progress: ", progress);
-//   }, [progress]);
-//   return (
-//     <div className=" text-white text-3xl">
-//       <div {...getRootProps()}>
-//         <input {...getInputProps()} />
-//         <p>Drag and drop or browse files</p>
-//       </div>
-
-//       {video ? <p>{video.name}</p> : <p>Select a video file to upload.</p>}
-//       {progressFormatted && <p>{progressFormatted}</p>}
-
-//       <button
-//         onClick={() => {
-//           createAsset?.();
-//         }}
-//       >
-//         Upload
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default Create;
