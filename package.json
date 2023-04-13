@@ -11,6 +11,7 @@
     "dependencies": {
         "@livepeer/react": "^2.4.2",
         "aptos": "^1.8.3",
+        "dotenv": "^16.0.3",
         "eslint": "8.38.0",
         "eslint-config-next": "13.3.0",
         "livepeer": "^2.4.2",
