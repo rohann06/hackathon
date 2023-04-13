@@ -1,6 +1,7 @@
 import React from "react";
 import { ImBook } from "react-icons/im";
 import { useRouter } from "next/router";
+import { AddressProvider } from "@/context/AddressProvider";
 
 const Layout = ({ children }) => {
   const router = useRouter();
@@ -20,7 +21,7 @@ const Layout = ({ children }) => {
         </div>
       </div>
       <div className=" h-full overflow-y-auto w-full flex flex-col items-start py-10 ml-5">
-        {children}
+        <AddressProvider>{children}</AddressProvider>
       </div>
     </div>
   );
