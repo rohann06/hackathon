@@ -1,3 +1,4 @@
+import Layout from "@/components/Layout";
 import "@/styles/globals.css";
 import {
   LivepeerConfig,
@@ -21,10 +22,12 @@ export default function App({ Component, pageProps }) {
     []
   );
   return (
-    <AptosContext.Provider value={aptosClient}>
-      <LivepeerConfig client={livepeerClient}>
-        <Component {...pageProps} />
-      </LivepeerConfig>
-    </AptosContext.Provider>
+    <Layout>
+      <AptosContext.Provider value={aptosClient}>
+        <LivepeerConfig client={livepeerClient}>
+          <Component {...pageProps} />
+        </LivepeerConfig>
+      </AptosContext.Provider>
+    </Layout>
   );
 }

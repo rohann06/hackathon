@@ -48,12 +48,12 @@ const Create = () => {
   //     []
   //   );
   return (
-    <div className=" lg:my-10 lg:mx-80 my-3 mx-3 ">
+    <div className="  w-full px-10 -mt-4">
       <h2 className=" dark:text-white lg:text-3xl text-xl font-bold text-center">
         Post a video🚀
       </h2>
       <div className=" lg:mt-10 mt-5">
-        <div className=" flex flex-col w-full my-6">
+        <div className="  my-6">
           <label
             className=" lg:text-lg font-semibold dark:text-white"
             htmlFor=""
@@ -91,7 +91,8 @@ const Create = () => {
           />
         </div>
         <div className=" flex flex-col items-center justify-center  rounded-xl dark:bg-gray-800 lg:w-[50%] h-52">
-          <BsFillCloudArrowUpFill className=" my-3 text-3xl text-slate-500" />
+          <BsFillCloudArrowUpFill className="  text-3xl text-slate-500" />
+          <p className=" mb-2 text-white">Upload file here</p>
           <label
             htmlFor="upload-video"
             className=" bg-blue-600 text-white rounded-xl font-semibold text-[14px] lg:text-[16px] px-8 lg:px-10 py-2 "

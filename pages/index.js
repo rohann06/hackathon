@@ -1,9 +1,6 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
 import AptosWalletConnect from "@/components/Section/AptosWalletConnect";
 import MediaContent from "@/components/Section/MediaContent";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
@@ -15,9 +12,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className=" flex flex-col justify-center items-center my-12">
+        <div>
           <AptosWalletConnect />
-          <MediaContent/>
+          <MediaContent />
         </div>
       </main>
     </>
