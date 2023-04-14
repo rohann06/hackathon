@@ -6,7 +6,7 @@ const TopCatagories = ({ catagories }) => {
   console.log("catagorie", catagories);
   return (
     <div className=" my-10">
-      <h2 className=" text-3xl dark:text-white font-bold">Top categories</h2>
+      <h2 className=" text-3xl text-white font-bold">Top categories</h2>
 
       <Carosal>
         {catagories.map((catagorie, index) => {
@@ -19,7 +19,7 @@ const TopCatagories = ({ catagories }) => {
                   alt="catagorieImg"
                 />
               </div>
-              <p className=" mt-2 font-bold dark:text-white text-lg">
+              <p className=" mt-2 font-bold text-white text-lg">
                 {catagorie.name}
               </p>
             </div>
