@@ -189,32 +189,32 @@ const Create = () => {
 
   return (
     <div className="  w-full px-10 -mt-4">
-      <h2 className=" dark:text-white lg:text-3xl text-xl font-bold text-center">
+      <h2 className="  lg:text-3xl text-xl font-bold text-center">
         Post a video🚀
       </h2>
-      <div className=" lg:mt-10 mt-5 text-white">
+      <div className=" lg:mt-10 mt-5 ">
         <div className="  my-6">
-          <label className=" lg:text-lg font-semibold text-white" htmlFor="" />
+          <label className=" lg:text-lg font-semibold " htmlFor="" />
           Title
           <input
             onChange={(e) => setTile(e.target.value)}
             type="text"
-            className=" w-full border-2  border-slate-600 text-white bg-transparent rounded-xl px-4 py-3 my-3 "
+            className=" w-full border-2  border-slate-300 dark:border-slate-500  bg-transparent rounded-xl px-4 py-3 my-3 "
           />
         </div>
         <div className=" flex flex-col w-full my-6">
-          <label className=" lg:text-lg font-semibold text-white" htmlFor="">
+          <label className=" lg:text-lg font-semibold " htmlFor="">
             Tags
           </label>
           <input
             onChange={(e) => setTags(e.target.value)}
             type="text"
-            className=" w-full border-2 border-slate-600 text-white bg-transparent rounded-xl px-4 py-3 my-3 "
+            className=" w-full border-2 border-slate-300 dark:border-slate-500 bg-transparent rounded-xl px-4 py-3 my-3 "
           />
         </div>
         <div className=" flex flex-col w-full my-6">
           <label
-            className=" lg:text-lg font-semibold dark:text-white"
+            className=" lg:text-lg font-semibold dark:"
             htmlFor=""
           >
             Description
@@ -223,12 +223,12 @@ const Create = () => {
             onChange={(e) => setDescription(e.target.value)}
             type="text"
             rows="7"
-            className=" w-full border-2 border-slate-600 text-white bg-transparent rounded-xl px-4 py-3 my-3 "
+            className=" w-full border-2 border-slate-300 dark:border-slate-500 bg-transparent rounded-xl px-4 py-3 my-3 "
           />
         </div>
         <div className=" flex justify-start items-center gap-10">
-          <div className=" flex flex-col items-center justify-center  rounded-xl bg-gray-800 w-[50%]  h-60">
-            <div className=" text-white text-center">
+          <div className=" flex flex-col items-center justify-center  rounded-xl dark:bg-gray-800 bg-gray-300 w-[50%]  h-60">
+            <div className="  text-center">
               <div className=" w-full" {...getRootProps()}>
                 <input {...getInputProps()} />
                 <p className=" text-3xl font-extrabold text-gray-600 my-3">
@@ -238,13 +238,13 @@ const Create = () => {
               {video ? (
                 <p> {video.name} </p>
               ) : (
-                <p> Select a video file to upload. </p>
+                <p> Drag your video here </p>
               )}
               {progressFormatted && <p> {progressFormatted} </p>}
             </div>
           </div>
 
-          <div className=" h-60 bg-black text-white ove w-[30%] rounded-xl">
+          <div className=" h-60 bg-black  ove w-[30%] rounded-xl">
             {updatedData && (
               <Player
                 playbackId={updatedData?.storage?.ipfs?.cid}
@@ -267,7 +267,7 @@ const Create = () => {
           )}
           <button
             onClick={() => mintNft?.()}
-            className=" bg-blue-600 text-white rounded-xl font-semibold text-[14px] lg:text-[20px] px-8 lg:px-20 py-2 "
+            className=" bg-blue-600 text-white  rounded-xl font-semibold text-[14px] lg:text-[20px] px-8 lg:px-20 py-2 "
           >
             Mint Video NFT
           </button>

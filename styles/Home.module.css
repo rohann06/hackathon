@@ -250,6 +250,7 @@
   }
 }
 
+
 /* Tablet and Smaller Desktop */
 @media (min-width: 701px) and (max-width: 1120px) {
   .grid {

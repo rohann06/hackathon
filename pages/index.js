@@ -1,6 +1,5 @@
 import Head from "next/head";
 import MediaContent from "@/components/Section/MediaContent";
-import AptosWalletConnect from "@/components/Section/AptosWalletConnect";
 
 export default function Home() {
   return (
@@ -13,7 +12,6 @@ export default function Home() {
       </Head>
       <main>
         <div>
-          <AptosWalletConnect />
           <MediaContent />
         </div>
       </main>

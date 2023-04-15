@@ -5,7 +5,7 @@ import React from "react";
 const Populer = ({leardatas}) => {
   return (
     <div className=" my-10">
-      <h2 className=" text-3xl text-white font-bold">Populer</h2>
+      <h2 className=" text-3xl font-bold">Populer</h2>
 
       <Carosal>
         {leardatas.map((leardata, index) => {

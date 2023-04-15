@@ -168,8 +168,8 @@ export default function Create() {
 
   return (
     <div className=" flex flex-col justify-center items-center gap-10 mx-80 mt-10">
-      <h2 className=" text-4xl font-bold text-white mb-10">Create Live Stream </h2>
-      <p className=" text-white text-lg font-semibold">
+      <h2 className=" text-4xl font-bold  mb-10">Create Live Stream </h2>
+      <p className="  text-lg font-semibold">
         <b>Notice:</b> Your stream viewers required to have a
         <a
           className=" text-blue-500"
@@ -193,7 +193,7 @@ export default function Create() {
       </p>
       <div className=" flex items-center gap-5">
         <input
-          className=" py-3 px-5 text-lg rounded-full bg-transparent border border-slate-700 text-white"
+          className=" py-3 px-5 text-lg rounded-full bg-transparent border border-slate-700"
           name="streamName"
           type="text"
           placeholder="Enter stream name.."

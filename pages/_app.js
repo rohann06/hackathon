@@ -11,6 +11,7 @@ import { PetraWallet } from "petra-plugin-wallet-adapter";
 import { BloctoWallet } from "@blocto/aptos-wallet-adapter-plugin";
 import { MartianWallet } from "@martianwallet/aptos-wallet-adapter";
 import { AptosWalletAdapterProvider } from "@aptos-labs/wallet-adapter-react";
+import { ThemeProvider } from "next-themes";
 
 export const AptosContext = createContext(null);
 
@@ -29,14 +30,16 @@ export default function App({ Component, pageProps }) {
   const wallets = [new PetraWallet(), new MartianWallet()];
 
   return (
-    <AptosWalletAdapterProvider plugins={wallets} autoConnect={true}>
-      <AptosContext.Provider value={aptosClient}>
-        <LivepeerConfig client={livepeerClient}>
-          <Layout>
-            <Component {...pageProps} />{" "}
-          </Layout>
-        </LivepeerConfig>{" "}
-      </AptosContext.Provider>{" "}
-    </AptosWalletAdapterProvider>
+    <ThemeProvider attribute="class">
+      <AptosWalletAdapterProvider plugins={wallets} autoConnect={true}>
+        <AptosContext.Provider value={aptosClient}>
+          <LivepeerConfig client={livepeerClient}>
+            <Layout>
+              <Component {...pageProps} />{" "}
+            </Layout>
+          </LivepeerConfig>{" "}
+        </AptosContext.Provider>{" "}
+      </AptosWalletAdapterProvider>
+    </ThemeProvider>
   );
 }

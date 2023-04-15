@@ -6,22 +6,20 @@ const TopCatagories = ({ catagories }) => {
   console.log("catagorie", catagories);
   return (
     <div className=" my-10">
-      <h2 className=" text-3xl text-white font-bold">Top categories</h2>
+      <h2 className=" text-3xl  font-bold">Top categories</h2>
 
       <Carosal>
         {catagories.map((catagorie, index) => {
           return (
             <div className=" my-5" key={index}>
-              <div className="  overflow-hidden rounded-lg h-[17rem] w-[20rem]">
+              <div className="  overflow-hidden rounded-lg h-[17rem] w-[20rem] drop-shadow-md">
                 <img
-                  className="  cursor-pointer bg-cover h-full w-full hover:scale-105 duration-300"
+                  className="  cursor-pointer bg-cover h-full w-full hover:scale-105 duration-300 "
                   src={catagorie.image}
                   alt="catagorieImg"
                 />
               </div>
-              <p className=" mt-2 font-bold text-white text-lg">
-                {catagorie.name}
-              </p>
+              <p className=" mt-2 font-bold  text-lg">{catagorie.name}</p>
             </div>
           );
         })}

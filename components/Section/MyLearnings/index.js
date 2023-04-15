@@ -5,7 +5,7 @@ import Carosal from "../../Interface/Carosal";
 const MyLearnings = ({leardatas}) => {
   return (
     <div className=" my-10">
-      <h2 className=" text-3xl text-white font-bold">My Learnings</h2>
+      <h2 className=" text-3xl font-bold">My Learnings</h2>
 
       <Carosal>
         {leardatas.map((leardata, index) => {
