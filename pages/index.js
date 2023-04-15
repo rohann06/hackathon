@@ -1,6 +1,6 @@
 import Head from "next/head";
-import AptosWalletConnect from "@/components/Section/AptosWalletConnect";
 import MediaContent from "@/components/Section/MediaContent";
+import AptosWalletConnect from "@/components/Section/AptosWalletConnect";
 
 export default function Home() {
   return (
