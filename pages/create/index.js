@@ -11,6 +11,7 @@ import { AddressContext } from "@/context/AddressProvider";
 import { AptosContext } from "../_app";
 import { parseArweaveTxId, parseCid } from "livepeer/media";
 import { AptosClient } from "aptos";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 
 const NODE_URL = "https://fullnode.devnet.aptoslabs.com";
 
@@ -20,6 +21,20 @@ const Create = () => {
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
   const [url, setUrl] = useState("");
+
+  const {
+    connect,
+    account,
+    network,
+    connected,
+    disconnect,
+    wallet,
+    wallets,
+    signAndSubmitTransaction,
+    signTransaction,
+    signMessage,
+    signMessageAndVerify,
+  } = useWallet();
 
   const { address } = useContext(AddressContext);
   //const { aptosClient } = useContext(AptosContext);
@@ -122,7 +137,10 @@ const Create = () => {
     console.log("functoin");
     try {
       console.log("In the try");
-      if (address && aptosClient && asset?.storage?.ipfs?.nftMetadata?.url) {
+      console.log(address);
+      console.log(updatedData?.storage?.ipfs?.nftMetadata?.url);
+      console.log(aptosClient);
+      if (address && aptosClient && updatedData?.storage?.ipfs?.nftMetadata?.url) {
         const body = {
           receiver: address,
           metadataUri: NftAsset.storage.ipfs.nftMetadata.url,
@@ -155,7 +173,7 @@ const Create = () => {
             type_arguments: [],
           };
 
-          const aptosResponse = await window.aptos.signAndSubmitTransaction(
+          const aptosResponse = await signAndSubmitTransaction(
             transaction
           );
 

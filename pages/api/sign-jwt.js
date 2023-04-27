@@ -2,7 +2,6 @@
 import { signAccessJwt } from 'livepeer/crypto';
 import { NextApiRequest, NextApiResponse } from 'next';
  
-import { ApiError } from '../../lib/error';
  
 
  
